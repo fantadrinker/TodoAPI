@@ -1,13 +1,13 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 const _ = require('dotenv').config();
-const { 
-  getTodos, 
+const {
+  getTodos,
   getCompletedTodos,
-  insertTodo, 
-  deleteAllTodos, 
-  updateTodo
-} = require("./database");
+  insertTodo,
+  deleteAllTodos,
+  updateTodo,
+} = require('./database');
 
 const app = express();
 const port = 3000;
@@ -22,35 +22,37 @@ app.use((err, req, res, next) => {
   console.error(err);
 });
 
-app.get("/todos", async (req, res) => {
-  const data = await (req.query.completed === "true"? getCompletedTodos(req.query.query): getTodos(req.query.query));
+app.get('/todos', async (req, res) => {
+  const data = await (req.query.completed === 'true'
+    ? getCompletedTodos(req.query.query)
+    : getTodos(req.query.query));
   res.status(200).json({ data });
 });
 
 // grab todo text from query string, then insert todo into database
-app.post("/todos", async (req, res) => {
+app.post('/todos', async (req, res) => {
   const data = await insertTodo(req.body.todo);
-  res.status(201).json({error: null, data});
+  res.status(201).json({ error: null, data });
 });
 
 // update todo with id to completed
-app.put("/todos/:id", async (req, res, next) => {
+app.put('/todos/:id', async (req, res, next) => {
   // update todo with id
-  try{
+  try {
     await updateTodo(req.params.id, req.body.completed);
-    res.status(200).json({error: null});
-  } catch(err) {
-    if (err.message === "Todo not found") {
-      res.status(404).json({error: err.message});
+    res.status(200).json({ error: null });
+  } catch (err) {
+    if (err.message === 'Todo not found') {
+      res.status(404).json({ error: err.message });
     } else {
       next(err);
     }
   }
 });
 
-app.delete("/todos", async (req, res) => {
+app.delete('/todos', async (req, res) => {
   await deleteAllTodos();
-  res.status(200).json({error: null});
+  res.status(200).json({ error: null });
 });
 
 app.listen(port, () => {
