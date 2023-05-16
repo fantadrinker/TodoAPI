@@ -4,6 +4,8 @@
 
 npm, node, postgres
 
+### Installation
+
 1. Set up postgres database: 
     - install latest postgresql on mac environment
     - set up your local database with admin user
@@ -16,5 +18,15 @@ npm, node, postgres
         PG_DATABASE=<db_name>
         PG_TABLE=<table_name>
     ```
+    - run `./scripts/setup` to set up database/table
+    - modify `.env` file to also update environment variables so the node app can connect to the database and table we just created
 
-    - modify `.env` file to 
+2. set up node dependencies and express app
+    - run `npm install` in root directory
+    - run `node app.js` to start server
+
+
+### Testing
+
+1. stop the express app to free up port
+2. run `npm run test` to test the api endpoints
