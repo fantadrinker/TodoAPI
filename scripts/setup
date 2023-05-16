@@ -1,7 +1,7 @@
 #!/bin/bash
-PG_USER=yizhicui
-PG_DATABASE=postgres_test
-PG_TABLE=todoitems_test
+PG_USER=postgres
+PG_DATABASE=postgres
+PG_TABLE=todoitems
 
 echo "create database $PG_DATABASE..."
 

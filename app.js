@@ -23,7 +23,6 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/todos", async (req, res) => {
-  console.log(req.query)
   const data = await (req.query.completed === "true"? getCompletedTodos(req.query.query): getTodos(req.query.query));
   res.status(200).json({ data });
 });
@@ -55,7 +54,7 @@ app.delete("/todos", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`TodoAPI app listening on port ${port}`);
 });
 
 module.exports = app;
