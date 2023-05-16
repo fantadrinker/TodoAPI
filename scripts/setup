@@ -1,0 +1,12 @@
+#!/bin/bash
+PG_USER=yizhicui
+PG_DATABASE=postgres_test
+PG_TABLE=todoitems_test
+
+echo "create database $PG_DATABASE..."
+
+psql -U $PG_USER -c "CREATE DATABASE $PG_DATABASE;"
+
+echo "Creating table $PG_TABLE in $PG_DATABASE as $PG_USER..."
+psql -U $PG_USER -d $PG_DATABASE -c "CREATE TABLE IF NOT EXISTS $PG_TABLE (\"id\" VARCHAR(50), \"value\" VARCHAR(50) NOT NULL, \"completed\" BOOL, \"completed_time\" TIMESTAMP NULL);"
+
