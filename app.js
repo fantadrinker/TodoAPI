@@ -22,6 +22,16 @@ app.use((err, req, res, next) => {
   console.error(err);
 });
 
+/**
+ * GET /todos
+ * returns a list of todos based on query stirng filtering and completed status
+ * if completed is true, sort by completed_time descending
+ * if completed is false, sort by todo text value ascending
+ * TODO:
+ * - parameter serialization
+ * - add pagination,
+ * - group completed and uncompleted and if completed is not specified.
+ */
 app.get('/todos', async (req, res) => {
   const data = await (req.query.completed === 'true'
     ? getCompletedTodos(req.query.query)
@@ -29,13 +39,19 @@ app.get('/todos', async (req, res) => {
   res.status(200).json({ data });
 });
 
-// grab todo text from query string, then insert todo into database
+/**
+ * POST /todos
+ * inserts a new todo into the database
+ */
 app.post('/todos', async (req, res) => {
   const data = await insertTodo(req.body.todo);
   res.status(201).json({ error: null, data });
 });
 
-// update todo with id to completed
+/**
+ * PUT /todos/:id
+ * updates a todo with the given id
+ */
 app.put('/todos/:id', async (req, res, next) => {
   // update todo with id
   try {
@@ -50,6 +66,10 @@ app.put('/todos/:id', async (req, res, next) => {
   }
 });
 
+/**
+ * DELETE /todos
+ * deletes all todos
+ */
 app.delete('/todos', async (req, res) => {
   await deleteAllTodos();
   res.status(200).json({ error: null });
